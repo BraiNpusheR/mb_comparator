@@ -25,6 +25,7 @@ private slots:
   void OpenRightFile(const QString& file_name);
   void on_leftOpenFileButton_clicked();
   void on_rightOpenFileButton_clicked();
+  void on_compareButton_clicked();
 
 private:
   void SetDefautFont();

@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QFile>
+#include <QTextStream>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
       default_font_(QFont("Ubuntu Mono", 12)),
@@ -66,4 +69,23 @@ void MainWindow::SetDefautFont() {
   font_dialog_->setCurrentFont(default_font_);
   ui_->leftText->setFont(default_font_);
   ui_->rightText->setFont(default_font_);
+}
+
+void MainWindow::on_compareButton_clicked() {
+  // Reading left
+  ui_->leftText->clear();
+  QFile fileLeft(ui_->leftFileName->text());
+  fileLeft.open(QFile::ReadOnly);
+  QTextStream streamLeft(&fileLeft);
+  while (!streamLeft.atEnd()) {
+    ui_->leftText->insertPlainText(streamLeft.readLine() + "\n");
+  }
+  // Reading right
+  ui_->rightText->clear();
+  QFile fileRight(ui_->rightFileName->text());
+  fileRight.open(QFile::ReadOnly);
+  QTextStream streamRight(&fileRight);
+  while (!streamRight.atEnd()) {
+    ui_->rightText->insertPlainText(streamRight.readLine() + "\n");
+  }
 }

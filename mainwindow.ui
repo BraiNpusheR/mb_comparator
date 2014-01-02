@@ -69,6 +69,9 @@
          </item>
          <item>
           <widget class="QTextEdit" name="leftText">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
            <property name="horizontalScrollBarPolicy">
             <enum>Qt::ScrollBarAsNeeded</enum>
            </property>
@@ -122,6 +125,9 @@
          </item>
          <item>
           <widget class="QTextEdit" name="rightText">
+           <property name="verticalScrollBarPolicy">
+            <enum>Qt::ScrollBarAsNeeded</enum>
+           </property>
            <property name="lineWrapMode">
             <enum>QTextEdit::NoWrap</enum>
            </property>
@@ -173,8 +179,6 @@
      </item>
     </layout>
    </widget>
-   <zorder>verticalLayoutWidget_3</zorder>
-   <zorder>compareButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
