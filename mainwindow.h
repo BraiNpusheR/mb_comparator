@@ -29,6 +29,7 @@ private slots:
 
 private:
   void SetDefautFont();
+  QVector<QString> ReadFile(const QString& file_name);
 
   QFont default_font_;
   Ui::MainWindow* ui_;
