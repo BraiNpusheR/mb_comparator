@@ -11,10 +11,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp\
-        subsequence.cpp
+    mainwindow.cpp\
+    subsequence.cpp \
+    parsedata.cpp \
+    htmlptag.cpp
 
 HEADERS  += mainwindow.h\
-        subsequence.h
+    subsequence.h \
+    parsedata.h \
+    htmlptag.h
 
 FORMS    += mainwindow.ui

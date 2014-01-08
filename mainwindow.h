@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "subsequence.h"
+
 #include <QMainWindow>
 #include <QFontDialog>
 #include <QFileDialog>
@@ -26,8 +28,13 @@ private slots:
   void on_leftOpenFileButton_clicked();
   void on_rightOpenFileButton_clicked();
   void on_compareButton_clicked();
+  void SetLeftText(const QString& text);
+  void SetLeftNumbers(const QString& numbers);
+  void SetRightText(const QString& text);
+  void SetRightNumbers(const QString& numbers);
 
 private:
+  void keyReleaseEvent(QKeyEvent* key_event);
   void SetDefautFont();
   QVector<QString> ReadFile(const QString& file_name);
 
