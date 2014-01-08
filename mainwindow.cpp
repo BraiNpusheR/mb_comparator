@@ -39,6 +39,11 @@ MainWindow::MainWindow(QWidget *parent)
           ui_->rightText->verticalScrollBar(), SLOT(setValue(int)));
   connect(ui_->rightText->verticalScrollBar(), SIGNAL(valueChanged(int)),
           ui_->leftText->verticalScrollBar(), SLOT(setValue(int)));
+  // Sinchronize horizontal scroll bars
+  connect(ui_->leftText->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+          ui_->rightText->horizontalScrollBar(), SLOT(setValue(int)));
+  connect(ui_->rightText->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+          ui_->leftText->horizontalScrollBar(), SLOT(setValue(int)));
   // Connect slot for change font
   connect(font_dialog_, SIGNAL(fontSelected(QFont)),
           this, SLOT(ChangeFont(QFont)));

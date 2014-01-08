@@ -23,21 +23,21 @@ void ParseData::Parsing(const QVector<QString>& left_text,
     // TODO: Добавить нормальный парсинг строки в html
     switch (compare_result[i]) {
       case none:
-        left_html_stream<<HtmlPTag(left_text[left_index++] + " ", "#FFFFFF", "").toString();
+        left_html_stream<<HtmlPTag(left_text[left_index++], "#FFFFFF", "").toString();
         left_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<left_index<<"</p>";
-        right_html_stream<<HtmlPTag(right_text[right_index++] + " ", "#FFFFFF", "").toString();
+        right_html_stream<<HtmlPTag(right_text[right_index++], "#FFFFFF", "").toString();
         right_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<right_index<<"</p>";
       break;
       case away:
-        left_html_stream<<HtmlPTag(left_text[left_index++] + " ", "#FF7070", "").toString();
+        left_html_stream<<HtmlPTag(left_text[left_index++], "#FF7070", "").toString();
         left_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<left_index<<"</p>";
-        right_html_stream<<HtmlPTag(" ", "#FF7070", "").toString();
+        right_html_stream<<HtmlPTag(left_text[left_index - 1], "#FF7070", "#C85f5f").toString();
         right_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\"> </p>";
       break;
       case insert:
-        left_html_stream<<HtmlPTag(" ", "#7070FF", "").toString();
+        left_html_stream<<HtmlPTag(right_text[right_index], "#7070FF", "#6161B5").toString();
         left_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\"> </p>";
-        right_html_stream<<HtmlPTag(right_text[right_index++] + " ", "#7070FF", "").toString();
+        right_html_stream<<HtmlPTag(right_text[right_index++], "#7070FF", "").toString();
         right_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<right_index<<"</p>";
       break;
     }
