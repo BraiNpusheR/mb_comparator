@@ -241,20 +241,65 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>20</width>
-             <height>35</height>
+             <width>10</width>
+             <height>33</height>
             </size>
            </property>
           </spacer>
          </item>
          <item>
           <widget class="QScrollBar" name="verticalScrollBar">
+           <property name="maximum">
+            <number>0</number>
+           </property>
+           <property name="singleStep">
+            <number>0</number>
+           </property>
+           <property name="pageStep">
+            <number>0</number>
+           </property>
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>
           </widget>
          </item>
         </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QScrollBar" name="horizontalScrollBar">
+         <property name="maximum">
+          <number>0</number>
+         </property>
+         <property name="singleStep">
+          <number>0</number>
+         </property>
+         <property name="pageStep">
+          <number>0</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>23</width>
+           <height>10</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>

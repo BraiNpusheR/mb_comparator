@@ -36,14 +36,26 @@ MainWindow::MainWindow(QWidget *parent)
           ui_->rightText->verticalScrollBar(), SLOT(setValue(int)));
   // Sinchronize vertical scroll bars
   connect(ui_->leftText->verticalScrollBar(), SIGNAL(valueChanged(int)),
-          ui_->rightText->verticalScrollBar(), SLOT(setValue(int)));
-  connect(ui_->rightText->verticalScrollBar(), SIGNAL(valueChanged(int)),
+          ui_->verticalScrollBar, SLOT(setValue(int)));
+  connect(ui_->verticalScrollBar, SIGNAL(valueChanged(int)),
           ui_->leftText->verticalScrollBar(), SLOT(setValue(int)));
+  connect(ui_->rightText->verticalScrollBar(), SIGNAL(valueChanged(int)),
+          ui_->verticalScrollBar, SLOT(setValue(int)));
+  connect(ui_->verticalScrollBar, SIGNAL(valueChanged(int)),
+          ui_->rightText->verticalScrollBar(), SLOT(setValue(int)));
+  connect(ui_->leftText->verticalScrollBar(), SIGNAL(rangeChanged(int,int)),
+          this, SLOT(SetVerticalScrollBarRange(int,int)));
   // Sinchronize horizontal scroll bars
   connect(ui_->leftText->horizontalScrollBar(), SIGNAL(valueChanged(int)),
-          ui_->rightText->horizontalScrollBar(), SLOT(setValue(int)));
-  connect(ui_->rightText->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+          ui_->horizontalScrollBar, SLOT(setValue(int)));
+  connect(ui_->horizontalScrollBar, SIGNAL(valueChanged(int)),
           ui_->leftText->horizontalScrollBar(), SLOT(setValue(int)));
+  connect(ui_->rightText->horizontalScrollBar(), SIGNAL(valueChanged(int)),
+          ui_->horizontalScrollBar, SLOT(setValue(int)));
+  connect(ui_->horizontalScrollBar, SIGNAL(valueChanged(int)),
+          ui_->rightText->horizontalScrollBar(), SLOT(setValue(int)));
+  connect(ui_->leftText->horizontalScrollBar(), SIGNAL(rangeChanged(int,int)),
+          this, SLOT(SetHorizontalScrollBarRange(int,int)));
   // Connect slot for change font
   connect(font_dialog_, SIGNAL(fontSelected(QFont)),
           this, SLOT(ChangeFont(QFont)));
@@ -158,6 +170,24 @@ void MainWindow::keyReleaseEvent(QKeyEvent* key_event) {
       break;
     }
   }
+}
+
+void MainWindow::SetVerticalScrollBarRange(int min, int max) {
+  ui_->verticalScrollBar->setMinimum(min);
+  ui_->verticalScrollBar->setMaximum(max);
+  ui_->verticalScrollBar->setPageStep(
+        ui_->leftText->verticalScrollBar()->pageStep());
+  ui_->verticalScrollBar->setSingleStep(
+        ui_->leftText->verticalScrollBar()->singleStep());
+}
+
+void MainWindow::SetHorizontalScrollBarRange(int min, int max) {
+  ui_->horizontalScrollBar->setMinimum(min);
+  ui_->horizontalScrollBar->setMaximum(max);
+  ui_->horizontalScrollBar->setPageStep(
+        ui_->leftText->horizontalScrollBar()->pageStep());
+  ui_->horizontalScrollBar->setSingleStep(
+        ui_->leftText->horizontalScrollBar()->singleStep());
 }
 
 QVector<QString> MainWindow::ReadFile(const QString& file_name) {

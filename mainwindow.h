@@ -32,6 +32,8 @@ private slots:
   void SetLeftNumbers(const QString& numbers);
   void SetRightText(const QString& text);
   void SetRightNumbers(const QString& numbers);
+  void SetVerticalScrollBarRange(int, int);
+  void SetHorizontalScrollBarRange(int, int);
 
 private:
   void keyReleaseEvent(QKeyEvent* key_event);
