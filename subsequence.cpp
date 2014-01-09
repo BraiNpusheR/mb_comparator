@@ -1,11 +1,18 @@
 #include "subsequence.h"
 
-QVector<Actions> Subsequence::getLongestCommonSubsequence(
-    const QVector<QString>& FirstFileStrings,
-    const QVector<QString>& SecondFileStrings) {
+void setLeftText(const QVector<QString>& left_text)
+{
+    left_text_ = left_text;
+}
+void setRightText(const QVector<QString>& right_text)
+{
+    right_text_ = right_text;
+}
+
+void Subsequence::findLCS() {
   QVector< QVector<int> > table;
-  int FirstSize = FirstFileStrings.size();
-  int SecondSize = SecondFileStrings.size();
+  int FirstSize = left_text_.size();
+  int SecondSize = right_text_.size();
 
   table.resize(FirstSize + 1);
 
@@ -22,7 +29,7 @@ QVector<Actions> Subsequence::getLongestCommonSubsequence(
 
   for (int i = 1; i <= FirstSize; i++) {
     for (int j = 1; j <= SecondSize; j++) {
-      if (FirstFileStrings[i - 1] == SecondFileStrings[j - 1]) {
+      if (left_text_[i - 1] == right_text_[j - 1]) {
         table[i][j] = table[i - 1][j - 1] + 1;
       } else {
         table[i][j] = std::max(table[i - 1][j], table[i][j - 1]);
@@ -31,8 +38,8 @@ QVector<Actions> Subsequence::getLongestCommonSubsequence(
   }
 
   QVector<Actions> BackTrack;
-  int k = FirstFileStrings.size();
-  int l = SecondFileStrings.size();
+  int k = left_text_.size();
+  int l = right_text_.size();
 
   for (k, l; table[k][l] != 0 && k > 0 && l > 0; ) {
     if ((table[k][l] > table[k - 1][l]) && (table[k][l] > table[k][l - 1])) {
@@ -40,12 +47,12 @@ QVector<Actions> Subsequence::getLongestCommonSubsequence(
       k--;
       l--;
     } else {
-      if (table[k][l] == table[k - 1][l]) {
-        BackTrack.push_front(away);
-        k--;
-      } else {
+      if (table[k][l] == table[k][l-1]) {
         BackTrack.push_front(insert);
         l--;
+      } else {
+        BackTrack.push_front(away);
+        k--;
       }
     }
   }
@@ -58,5 +65,5 @@ QVector<Actions> Subsequence::getLongestCommonSubsequence(
       k--;
     }
   }
-  return BackTrack;
+  CompareIsDone(BackTrack);
 }
