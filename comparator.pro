@@ -12,13 +12,18 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     mainwindow.cpp\
-    subsequence.cpp \
     parsedata.cpp \
-    htmlptag.cpp
+    htmlptag.cpp \
+    subsequence.cpp \
+    comparatorwidget.cpp \
+    filereader.cpp
 
 HEADERS  += mainwindow.h\
-    subsequence.h \
     parsedata.h \
-    htmlptag.h
+    htmlptag.h \
+    subsequence.h \
+    comparatorwidget.h \
+    filereader.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    comparatorwidget.ui

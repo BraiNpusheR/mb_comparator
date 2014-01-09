@@ -10,21 +10,24 @@ class ParseData : public QObject
   Q_OBJECT
 public:
   explicit ParseData(QObject *parent = 0);
-  void Parsing(const QVector<QString>&, const QVector<QString>&,
-               const QVector<Actions>&);
 
 signals:
   void LeftHtmlReady(const QString&);
   void LeftNumbersReady(const QString&);
   void RightHtmlReady(const QString&);
   void RightNumbersReady(const QString&);
+  void Finished();
 
 public slots:
+  void setLeftText(const QVector<QString>& text);
+  void setRightText(const QVector<QString>& text);
+  void setCompareResult(const QVector<Actions>& comp_res);
+  void Parsing();
+
 private:
-  QString left_html_;
-  QString left_numbers_;
-  QString right_html_;
-  QString right_numbers_;
+  QVector<QString> left_text_;
+  QVector<QString> right_text_;
+  QVector<Actions> compare_result_;
 };
 
 #endif // PARSEDATA_H

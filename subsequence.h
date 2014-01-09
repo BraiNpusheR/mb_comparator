@@ -1,29 +1,28 @@
-#ifndef SUBSEQUENCE_H
-#define SUBSEQUENCE_H
+#ifndef SUBSEQ_H
+#define SUBSEQ_H
 
-#include <QString>
-#include <QVector>
 #include <QObject>
+#include <QVector>
+#include <QString>
 
 enum Actions {
   none = 0, insert, away
 };
-
 class Subsequence : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-  explicit Subsequence(QObject* parent = 0);
-  void setLeftText(const QVector<QString>& left_text);
-  void setRightText(const QVector<QString>& right_text);
-public slots:
-  //find longest common subsequence
-  void findLCS();
+    explicit Subsequence(QObject *parent = 0);
+    void setLeftText(const QVector<QString>& left_text);
+    void setRightText(const QVector<QString>& right_text);
 signals:
-  void CompareIsDone(QVector<QString>);
+    void CompareIsDone(QVector<Actions> BackTrack);
+    void Finished();
+public slots:
+  void findLCS();
 private:
   QVector<QString> left_text_;
   QVector<QString> right_text_;
 };
 
-#endif // SUBSEQUENCE_H
+#endif // SUBSEQ_H

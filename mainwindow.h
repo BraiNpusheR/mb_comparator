@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "subsequence.h"
+#include "comparatorwidget.h"
 
 #include <QMainWindow>
 #include <QFontDialog>
@@ -23,28 +24,15 @@ private slots:
   void ChangeFont(const QFont& font);
   void on_actionChangeFont_activated();
   void on_actionDefaultFont_activated();
-  void OpenLeftFile(const QString& file_name);
-  void OpenRightFile(const QString& file_name);
-  void on_leftOpenFileButton_clicked();
-  void on_rightOpenFileButton_clicked();
-  void on_compareButton_clicked();
-  void SetLeftText(const QString& text);
-  void SetLeftNumbers(const QString& numbers);
-  void SetRightText(const QString& text);
-  void SetRightNumbers(const QString& numbers);
-  void SetVerticalScrollBarRange(int, int);
-  void SetHorizontalScrollBarRange(int, int);
 
 private:
   void keyReleaseEvent(QKeyEvent* key_event);
   void SetDefautFont();
-  QVector<QString> ReadFile(const QString& file_name);
 
-  QFont default_font_;
   Ui::MainWindow* ui_;
-  QFontDialog* font_dialog_;
-  QFileDialog* left_file_dialog_;
-  QFileDialog* right_file_dialog_;
+  ComparatorWidget* comp_widget_;
+  QFont default_font_;
+  QFont current_font_;
 };
 
 #endif // MAINWINDOW_H

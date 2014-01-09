@@ -6,47 +6,59 @@
 ParseData::ParseData(QObject *parent) :
     QObject(parent) {}
 
-void ParseData::Parsing(const QVector<QString>& left_text,
-                        const QVector<QString>& right_text,
-                        const QVector<Actions>& compare_result) {
-  left_html_.clear();
-  right_html_.clear();
-  left_numbers_.clear();
-  right_numbers_.clear();
+void ParseData::setLeftText(const QVector<QString>& text) {
+  left_text_ = text;
+}
+
+void ParseData::setRightText(const QVector<QString>& text) {
+  right_text_ = text;
+}
+
+void ParseData::setCompareResult(const QVector<Actions>& comp_res) {
+  compare_result_ = comp_res;
+}
+
+void ParseData::Parsing() {
+  QString left_html;
+  QString right_html;
+  QString left_numbers;
+  QString right_numbers;
   int left_index = 0;
   int right_index = 0;
-  QTextStream left_html_stream(&left_html_);
-  QTextStream left_numbers_stream(&left_numbers_);
-  QTextStream right_html_stream(&right_html_);
-  QTextStream right_numbers_stream(&right_numbers_);
+  QTextStream left_html_stream(&left_html);
+  QTextStream left_numbers_stream(&left_numbers);
+  QTextStream right_html_stream(&right_html);
+  QTextStream right_numbers_stream(&right_numbers);
+  // String with left_index
   QString left_index_string;
   QTextStream left_index_string_stream(&left_index_string);
+  // String with right_index
   QString right_index_string;
   QTextStream right_index_string_stream(&right_index_string);
-  for (int i = 0; i < compare_result.size(); ++i) {
-    switch (compare_result[i]) {
+  for (int i = 0; i < compare_result_.size(); ++i) {
+    switch (compare_result_[i]) {
       case none:
-        left_html_stream<<HtmlPTag(left_text[left_index++], "#FFFFFF", "", "").toString();
+        left_html_stream<<HtmlPTag(left_text_[left_index++], "#FFFFFF", "", "").toString();
         left_index_string.clear();
         left_index_string_stream<<left_index;
         left_numbers_stream<<HtmlPTag(left_index_string, "", "", "right").toString();
-        right_html_stream<<HtmlPTag(right_text[right_index++], "#FFFFFF", "", "").toString();
+        right_html_stream<<HtmlPTag(right_text_[right_index++], "#FFFFFF", "", "").toString();
         right_index_string.clear();
         right_index_string_stream<<right_index;
         right_numbers_stream<<HtmlPTag(right_index_string, "", "", "right").toString();
       break;
       case away:
-        left_html_stream<<HtmlPTag(left_text[left_index++], "#FF7070", "", "").toString();
+        left_html_stream<<HtmlPTag(left_text_[left_index++], "#FF7070", "", "").toString();
         left_index_string.clear();
         left_index_string_stream<<left_index;
         left_numbers_stream<<HtmlPTag(left_index_string, "", "", "right").toString();
-        right_html_stream<<HtmlPTag(left_text[left_index - 1], "#FF7070", "#C85f5f", "").toString();
+        right_html_stream<<HtmlPTag(" ", "#FF7070", "", "").toString();
         right_numbers_stream<<HtmlPTag(" ", "", "", "right").toString();
       break;
       case insert:
-        left_html_stream<<HtmlPTag(right_text[right_index], "#7070FF", "#6161B5", "").toString();
+        left_html_stream<<HtmlPTag(" ", "#589fff", "", "").toString();
         left_numbers_stream<<HtmlPTag(" ", "", "", "right").toString();
-        right_html_stream<<HtmlPTag(right_text[right_index++], "#7070FF", "", "").toString();
+        right_html_stream<<HtmlPTag(right_text_[right_index++], "#589fff", "", "").toString();
         right_index_string.clear();
         right_index_string_stream<<right_index;
         right_numbers_stream<<HtmlPTag(right_index_string, "", "", "right").toString();
@@ -54,8 +66,9 @@ void ParseData::Parsing(const QVector<QString>& left_text,
     }
   }
 
-  LeftHtmlReady(left_html_);
-  LeftNumbersReady(left_numbers_);
-  RightHtmlReady(right_html_);
-  RightNumbersReady(right_numbers_);
+  LeftHtmlReady(left_html);
+  LeftNumbersReady(left_numbers);
+  RightHtmlReady(right_html);
+  RightNumbersReady(right_numbers);
+  Finished();
 }
