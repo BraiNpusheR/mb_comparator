@@ -19,26 +19,37 @@ void ParseData::Parsing(const QVector<QString>& left_text,
   QTextStream left_numbers_stream(&left_numbers_);
   QTextStream right_html_stream(&right_html_);
   QTextStream right_numbers_stream(&right_numbers_);
+  QString left_index_string;
+  QTextStream left_index_string_stream(&left_index_string);
+  QString right_index_string;
+  QTextStream right_index_string_stream(&right_index_string);
   for (int i = 0; i < compare_result.size(); ++i) {
-    // TODO: Добавить нормальный парсинг строки в html
     switch (compare_result[i]) {
       case none:
-        left_html_stream<<HtmlPTag(left_text[left_index++], "#FFFFFF", "").toString();
-        left_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<left_index<<"</p>";
-        right_html_stream<<HtmlPTag(right_text[right_index++], "#FFFFFF", "").toString();
-        right_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<right_index<<"</p>";
+        left_html_stream<<HtmlPTag(left_text[left_index++], "#FFFFFF", "", "").toString();
+        left_index_string.clear();
+        left_index_string_stream<<left_index;
+        left_numbers_stream<<HtmlPTag(left_index_string, "", "", "right").toString();
+        right_html_stream<<HtmlPTag(right_text[right_index++], "#FFFFFF", "", "").toString();
+        right_index_string.clear();
+        right_index_string_stream<<right_index;
+        right_numbers_stream<<HtmlPTag(right_index_string, "", "", "right").toString();
       break;
       case away:
-        left_html_stream<<HtmlPTag(left_text[left_index++], "#FF7070", "").toString();
-        left_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<left_index<<"</p>";
-        right_html_stream<<HtmlPTag(left_text[left_index - 1], "#FF7070", "#C85f5f").toString();
-        right_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\"> </p>";
+        left_html_stream<<HtmlPTag(left_text[left_index++], "#FF7070", "", "").toString();
+        left_index_string.clear();
+        left_index_string_stream<<left_index;
+        left_numbers_stream<<HtmlPTag(left_index_string, "", "", "right").toString();
+        right_html_stream<<HtmlPTag(left_text[left_index - 1], "#FF7070", "#C85f5f", "").toString();
+        right_numbers_stream<<HtmlPTag(" ", "", "", "right").toString();
       break;
       case insert:
-        left_html_stream<<HtmlPTag(right_text[right_index], "#7070FF", "#6161B5").toString();
-        left_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\"> </p>";
-        right_html_stream<<HtmlPTag(right_text[right_index++], "#7070FF", "").toString();
-        right_numbers_stream<<"<p align=\"right\" style=\"white-space:pre;margin:0;\">"<<right_index<<"</p>";
+        left_html_stream<<HtmlPTag(right_text[right_index], "#7070FF", "#6161B5", "").toString();
+        left_numbers_stream<<HtmlPTag(" ", "", "", "right").toString();
+        right_html_stream<<HtmlPTag(right_text[right_index++], "#7070FF", "", "").toString();
+        right_index_string.clear();
+        right_index_string_stream<<right_index;
+        right_numbers_stream<<HtmlPTag(right_index_string, "", "", "right").toString();
       break;
     }
   }

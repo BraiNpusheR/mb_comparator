@@ -2,13 +2,12 @@
 
 #include <QTextStream>
 
-HtmlPTag::HtmlPTag(QObject *parent) :
-  QObject(parent) { }
+HtmlPTag::HtmlPTag() { }
 
 HtmlPTag::HtmlPTag(const QString& text, const QString& bg_color,
-                   const QString& text_color, QObject* parent)
-    : QObject(parent), text_(text),
-      bg_color_(bg_color), text_color_(text_color) { }
+                   const QString& text_color, const QString& align)
+    : text_(text), bg_color_(bg_color),
+    text_color_(text_color), align_(align) { }
 
 void HtmlPTag::setText(const QString& text) {
   text_ = text;

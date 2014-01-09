@@ -1,24 +1,19 @@
 #ifndef HTMLPTAG_H
 #define HTMLPTAG_H
 
-#include <QObject>
+#include <QString>
 
-class HtmlPTag : public QObject
+class HtmlPTag
 {
-  Q_OBJECT
 public:
-  explicit HtmlPTag(QObject* parent = 0);
-  explicit HtmlPTag(const QString&, const QString&,
-                    const QString&, QObject* parent = 0);
-  void setText(const QString&);
-  void setBgColor(const QString&);
-  void setTextColor(const QString&);
-  void setAlign(const QString&);
+  explicit HtmlPTag();
+  explicit HtmlPTag(const QString& text, const QString& bg_color,
+                    const QString& text_color, const QString& align);
+  void setText(const QString& text);
+  void setBgColor(const QString& bg_color);
+  void setTextColor(const QString& text_color);
+  void setAlign(const QString& align);
   QString toString() const;
-
-signals:
-
-public slots:
 private:
   QString text_;
   QString bg_color_;
