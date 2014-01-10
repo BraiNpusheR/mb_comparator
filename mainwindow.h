@@ -26,7 +26,6 @@ private slots:
   void on_actionDefaultFont_activated();
 
 private:
-  void keyReleaseEvent(QKeyEvent* key_event);
   void SetDefautFont();
 
   Ui::MainWindow* ui_;

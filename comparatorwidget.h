@@ -34,10 +34,13 @@ private slots:
   void SetVerticalScrollBarRange(int min, int max);
   void SetLeftHorizontalScrollBarRange(int min, int max);
   void SetRightHorizontalScrollBarRange(int min, int max);
+  void SetCompareButtonEnabled();
 
 private:
   void SynchronizeVerticalScrollBars();
   void SynchronizeHorizontalScrollBars();
+  void Warning(const QString& title, const QString& message);
+  void keyReleaseEvent(QKeyEvent* key_event);
 
   Ui::ComparatorWidget *ui_;
 };

@@ -2,9 +2,6 @@
 #include "ui_mainwindow.h"
 
 #include <QDesktopWidget>
-#include <QScrollBar>
-#include <QKeyEvent>
-#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -49,22 +46,4 @@ void MainWindow::on_actionDefaultFont_activated() {
 void MainWindow::SetDefautFont() {
   current_font_ = default_font_;
   comp_widget_->SetFont(current_font_);
-}
-
-void MainWindow::keyReleaseEvent(QKeyEvent* key_event) {
-  if (key_event->modifiers() == (Qt::CTRL + Qt::SHIFT)) {
-    /*switch (key_event->key()) {
-      case Qt::Key_C: // CTRL + SHIFT + C for compare
-        on_compareButton_clicked();
-      break;
-      case Qt::Key_Left: // CTRL + SHIFT + Left for change left file name
-        on_leftOpenFileButton_clicked();
-      break;
-      case Qt::Key_Right: // CTRL + SHIFT + Right for change right file name
-        on_rightOpenFileButton_clicked();
-      break;
-      default:
-      break;
-    }*/
-  }
 }

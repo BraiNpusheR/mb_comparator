@@ -12,17 +12,12 @@ public:
   explicit ParseData(QObject *parent = 0);
 
 signals:
-  void LeftHtmlReady(const QString&);
-  void LeftNumbersReady(const QString&);
-  void RightHtmlReady(const QString&);
-  void RightNumbersReady(const QString&);
-  void Finished();
 
 public slots:
   void setLeftText(const QVector<QString>& text);
   void setRightText(const QVector<QString>& text);
   void setCompareResult(const QVector<Actions>& comp_res);
-  void Parsing();
+  QVector<QString> Parsing();
 
 private:
   QVector<QString> left_text_;

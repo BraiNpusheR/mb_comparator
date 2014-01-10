@@ -1,10 +1,12 @@
 #include "comparatorwidget.h"
 #include "ui_comparatorwidget.h"
-#include "subsequence.h"
-#include "parsedata.h"
 #include "filereader.h"
+#include "compareandparse.h"
 
+#include <QThread>
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QKeyEvent>
 
 ComparatorWidget::ComparatorWidget(QWidget *parent) :
     QWidget(parent),
@@ -29,39 +31,42 @@ void ComparatorWidget::SetFont(const QFont& font) {
 
 void ComparatorWidget::on_compareButton_clicked() {
   if (!ui_->compareButton->isEnabled()) return;
+  ui_->compareButton->setText("Wait");
+  ui_->compareButton->setEnabled(false);
   // Reading files
   QVector<QString> left_text;
   QVector<QString> right_text;
-  FileReader::ToVectorOfStrings(ui_->leftFileName->text(), left_text);
-  FileReader::ToVectorOfStrings(ui_->rightFileName->text(), right_text);
-  // Creating Subsequence object
-  Subsequence* compare_obj = new Subsequence(this);
-  compare_obj->setLeftText(left_text);
-  compare_obj->setRightText(right_text);
-  // Connect Finished() to deleteLater()
-  connect(compare_obj, SIGNAL(Finished()), compare_obj, SLOT(deleteLater()));
-  // Creating ParseDeta object
-  ParseData* parse_data_obj = new ParseData(this);
-  parse_data_obj->setLeftText(left_text);
-  parse_data_obj->setRightText(right_text);
-  connect(parse_data_obj, SIGNAL(Finished()),
-          parse_data_obj, SLOT(deleteLater()));
-  connect(compare_obj, SIGNAL(CompareIsDone(QVector<Actions>)),
-          parse_data_obj, SLOT(setCompareResult(QVector<Actions>)));
-  connect(compare_obj, SIGNAL(Finished()),
-          parse_data_obj, SLOT(Parsing()));
-  connect(parse_data_obj, SIGNAL(LeftHtmlReady(QString)),
+  if (!FileReader::ToVectorOfStrings(ui_->leftFileName->text(), left_text) ||
+      !FileReader::ToVectorOfStrings(ui_->rightFileName->text(), right_text)) {
+    ui_->leftFileName->clear();
+    ui_->rightFileName->clear();
+    Warning("Warning", "File does not exist");
+    return;
+  }
+  CompareAndParse* comp_and_parse_obj = new CompareAndParse;
+  comp_and_parse_obj->setLeftText(left_text);
+  comp_and_parse_obj->setRightText(right_text);
+  connect(comp_and_parse_obj, SIGNAL(LeftHtmlReady(QString)),
           this, SLOT(SetLeftTextHTML(QString)));
-  connect(parse_data_obj, SIGNAL(LeftNumbersReady(QString)),
+  connect(comp_and_parse_obj, SIGNAL(LeftNumbersReady(QString)),
           this, SLOT(SetLeftNumbersHTML(QString)));
-  connect(parse_data_obj, SIGNAL(RightHtmlReady(QString)),
+  connect(comp_and_parse_obj, SIGNAL(RightHtmlReady(QString)),
           this, SLOT(SetRightTextHTML(QString)));
-  connect(parse_data_obj, SIGNAL(RightNumbersReady(QString)),
+  connect(comp_and_parse_obj, SIGNAL(RightNumbersReady(QString)),
           this, SLOT(SetRightNumbersHTML(QString)));
-
-  compare_obj->findLCS();
-
-  //StartCompare();
+  connect(comp_and_parse_obj, SIGNAL(Finished()),
+          this, SLOT(SetCompareButtonEnabled()));
+  QThread* comp_and_parse_thread = new QThread(this);
+  connect(comp_and_parse_thread, SIGNAL(started()),
+          comp_and_parse_obj, SLOT(Start()));
+  connect(comp_and_parse_thread, SIGNAL(finished()),
+          comp_and_parse_obj, SLOT(deleteLater()));
+  connect(comp_and_parse_thread, SIGNAL(finished()),
+          comp_and_parse_thread, SLOT(deleteLater()));
+  connect(comp_and_parse_obj, SIGNAL(Finished()),
+          comp_and_parse_thread, SLOT(quit()));
+  comp_and_parse_obj->moveToThread(comp_and_parse_thread);
+  comp_and_parse_thread->start();
 }
 
 void ComparatorWidget::on_leftSelectFileButton_clicked() {
@@ -138,6 +143,11 @@ void ComparatorWidget::SetRightHorizontalScrollBarRange(int min, int max) {
       ui_->rightText->horizontalScrollBar()->singleStep());
 }
 
+void ComparatorWidget::SetCompareButtonEnabled() {
+  ui_->compareButton->setText("Compare");
+  ui_->compareButton->setEnabled(true);
+}
+
 void ComparatorWidget::SynchronizeVerticalScrollBars() {
   // Synchronize left vertical scroll bar and general vertical scroll bar
   connect(ui_->leftText->verticalScrollBar(), SIGNAL(valueChanged(int)),
@@ -179,4 +189,31 @@ void ComparatorWidget::SynchronizeHorizontalScrollBars() {
           this, SLOT(SetLeftHorizontalScrollBarRange(int, int)));
   connect(ui_->rightText->horizontalScrollBar(), SIGNAL(rangeChanged(int,int)),
           this, SLOT(SetRightHorizontalScrollBarRange(int, int)));
+}
+
+void ComparatorWidget::Warning(const QString& title, const QString& message) {
+  QMessageBox* warning_box = new QMessageBox(QMessageBox::Warning,
+                                             title, message,
+                                             QMessageBox::NoButton, this);
+  connect(warning_box, SIGNAL(finished(int)),
+          warning_box, SLOT(deleteLater()));
+  warning_box->show();
+}
+
+void ComparatorWidget::keyReleaseEvent(QKeyEvent* key_event) {
+  if (key_event->modifiers() == (Qt::CTRL + Qt::SHIFT)) {
+    switch (key_event->key()) {
+      case Qt::Key_C: // CTRL + SHIFT + C for compare
+        on_compareButton_clicked();
+      break;
+      case Qt::Key_Left: // CTRL + SHIFT + Left for change left file name
+        on_leftSelectFileButton_clicked();
+      break;
+      case Qt::Key_Right: // CTRL + SHIFT + Right for change right file name
+        on_rightSelectFileButton_clicked();
+      break;
+      default:
+      break;
+    }
+  }
 }

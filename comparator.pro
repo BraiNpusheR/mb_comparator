@@ -16,14 +16,16 @@ SOURCES += main.cpp\
     htmlptag.cpp \
     subsequence.cpp \
     comparatorwidget.cpp \
-    filereader.cpp
+    filereader.cpp \
+    compareandparse.cpp
 
 HEADERS  += mainwindow.h\
     parsedata.h \
     htmlptag.h \
     subsequence.h \
     comparatorwidget.h \
-    filereader.h
+    filereader.h \
+    compareandparse.h
 
 FORMS    += mainwindow.ui \
     comparatorwidget.ui

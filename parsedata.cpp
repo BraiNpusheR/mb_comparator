@@ -2,6 +2,7 @@
 #include "htmlptag.h"
 
 #include <QTextStream>
+#include <QVector>
 
 ParseData::ParseData(QObject *parent) :
     QObject(parent) {}
@@ -18,7 +19,7 @@ void ParseData::setCompareResult(const QVector<Actions>& comp_res) {
   compare_result_ = comp_res;
 }
 
-void ParseData::Parsing() {
+QVector<QString> ParseData::Parsing() {
   QString left_html;
   QString right_html;
   QString left_numbers;
@@ -65,10 +66,10 @@ void ParseData::Parsing() {
       break;
     }
   }
-
-  LeftHtmlReady(left_html);
-  LeftNumbersReady(left_numbers);
-  RightHtmlReady(right_html);
-  RightNumbersReady(right_numbers);
-  Finished();
+  QVector<QString> result;
+  result.push_back(left_html);
+  result.push_back(left_numbers);
+  result.push_back(right_html);
+  result.push_back(right_numbers);
+  return result;
 }
