@@ -16,6 +16,9 @@ ComparatorWidget::ComparatorWidget(QWidget *parent) :
   this->setLayout(ui_->mainLayout);
   SynchronizeVerticalScrollBars();
   SynchronizeHorizontalScrollBars();
+  ui_->leftHorizontalScrollBar->setHidden(true);
+  ui_->rightHorizontalScrollBar->setHidden(true);
+  ui_->verticalScrollBar->setHidden(true);
 }
 
 ComparatorWidget::~ComparatorWidget() {
@@ -125,6 +128,11 @@ void ComparatorWidget::SetVerticalScrollBarRange(int min, int max) {
       ui_->leftText->verticalScrollBar()->pageStep());
   ui_->verticalScrollBar->setSingleStep(
       ui_->leftText->verticalScrollBar()->singleStep());
+  if (max - min > 0) {
+    ui_->verticalScrollBar->setVisible(true);
+  } else {
+    ui_->verticalScrollBar->setHidden(true);
+  }
 }
 
 void ComparatorWidget::SetLeftHorizontalScrollBarRange(int min, int max) {
@@ -133,6 +141,11 @@ void ComparatorWidget::SetLeftHorizontalScrollBarRange(int min, int max) {
       ui_->leftText->horizontalScrollBar()->pageStep());
   ui_->leftHorizontalScrollBar->setSingleStep(
       ui_->leftText->horizontalScrollBar()->singleStep());
+  if (max - min > 0) {
+    ui_->leftHorizontalScrollBar->setVisible(true);
+  } else {
+    ui_->leftHorizontalScrollBar->setHidden(true);
+  }
 }
 
 void ComparatorWidget::SetRightHorizontalScrollBarRange(int min, int max) {
@@ -141,6 +154,11 @@ void ComparatorWidget::SetRightHorizontalScrollBarRange(int min, int max) {
       ui_->rightText->horizontalScrollBar()->pageStep());
   ui_->rightHorizontalScrollBar->setSingleStep(
       ui_->rightText->horizontalScrollBar()->singleStep());
+  if (max - min > 0) {
+    ui_->rightHorizontalScrollBar->setVisible(true);
+  } else {
+    ui_->rightHorizontalScrollBar->setHidden(true);
+  }
 }
 
 void ComparatorWidget::SetCompareButtonEnabled() {
