@@ -319,8 +319,6 @@ color: rgb(150, 150, 150);</string>
     </item>
    </layout>
   </widget>
-  <zorder>gridLayoutWidget</zorder>
-  <zorder></zorder>
  </widget>
  <resources/>
  <connections/>

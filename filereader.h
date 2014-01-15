@@ -1,15 +1,14 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
 
-#include <QVector>
-#include <QString>
+#include <QStringList>
 
 class FileReader
 {
 public:
   FileReader();
   static bool ToVectorOfStrings(const QString& file_name,
-                                QVector<QString>& text);
+                                QStringList& text);
 };
 
 #endif // FILEREADER_H

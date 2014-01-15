@@ -3,11 +3,11 @@
 Subsequence::Subsequence(QObject *parent) :
     QObject(parent){}
 
-void Subsequence::setLeftText(const QVector<QString>& left_text) {
+void Subsequence::setLeftText(const QStringList& left_text) {
   left_text_ = left_text;
 }
 
-void Subsequence::setRightText(const QVector<QString>& right_text) {
+void Subsequence::setRightText(const QStringList& right_text) {
   right_text_ = right_text;
 }
 
@@ -32,10 +32,10 @@ QVector<Actions> Subsequence::findLCS() {
 
   for (int i = 1; i <= FirstSize; i++) {
     for (int j = 1; j <= SecondSize; j++) {
-      if (left_text_[i - 1] == right_text_[j - 1]) {
+      if (left_text_.at(i - 1) == right_text_.at(j - 1)) {
         table[i][j] = table[i - 1][j - 1] + 1;
       } else {
-        table[i][j] = std::max(table[i - 1][j], table[i][j - 1]);
+        table[i][j] = qMax(table[i - 1][j], table[i][j - 1]);
       }
     }
   }

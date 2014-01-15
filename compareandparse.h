@@ -2,7 +2,7 @@
 #define COMPAREANDPARSE_H
 
 #include <QObject>
-#include <QVector>
+#include <QStringList>
 
 class CompareAndParse : public QObject
 {
@@ -18,13 +18,13 @@ signals:
   void Finished();
 
 public slots:
-  void setLeftText(const QVector<QString>& text);
-  void setRightText(const QVector<QString>& text);
+  void setLeftText(const QStringList& text);
+  void setRightText(const QStringList& text);
   void Start();
 
 private:
-  QVector<QString> left_text_;
-  QVector<QString> right_text_;
+  QStringList left_text_;
+  QStringList right_text_;
 };
 
 #endif // COMPAREANDPARSE_H

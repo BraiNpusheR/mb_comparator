@@ -4,6 +4,8 @@
 #include "subsequence.h"
 
 #include <QObject>
+#include <QStringList>
+#include <QVector>
 
 class ParseData : public QObject
 {
@@ -14,14 +16,14 @@ public:
 signals:
 
 public slots:
-  void setLeftText(const QVector<QString>& text);
-  void setRightText(const QVector<QString>& text);
+  void setLeftText(const QStringList& text);
+  void setRightText(const QStringList& text);
   void setCompareResult(const QVector<Actions>& comp_res);
   QVector<QString> Parsing();
 
 private:
-  QVector<QString> left_text_;
-  QVector<QString> right_text_;
+  QStringList left_text_;
+  QStringList right_text_;
   QVector<Actions> compare_result_;
 };
 

@@ -37,8 +37,8 @@ void ComparatorWidget::on_compareButton_clicked() {
   ui_->compareButton->setText("Wait");
   ui_->compareButton->setEnabled(false);
   // Reading files
-  QVector<QString> left_text;
-  QVector<QString> right_text;
+  QStringList left_text;
+  QStringList right_text;
   if (!FileReader::ToVectorOfStrings(ui_->leftFileName->text(), left_text) ||
       !FileReader::ToVectorOfStrings(ui_->rightFileName->text(), right_text)) {
     ui_->leftFileName->clear();

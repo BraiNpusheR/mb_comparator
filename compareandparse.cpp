@@ -5,11 +5,11 @@
 CompareAndParse::CompareAndParse(QObject *parent) :
   QObject(parent) { }
 
-void CompareAndParse::setLeftText(const QVector<QString>& text) {
+void CompareAndParse::setLeftText(const QStringList& text) {
   left_text_ = text;
 }
 
-void CompareAndParse::setRightText(const QVector<QString>& text) {
+void CompareAndParse::setRightText(const QStringList& text) {
   right_text_ = text;
 }
 
